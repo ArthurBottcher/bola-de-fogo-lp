@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FireAnimation from '../components/FireAnimation.astro';
+import '../styles/global.css';
+---
+
+<Layout>
+  <FireAnimation />
+
+  <main class="page">
+    <section class="hero">
+      <span class="badge">EM BREVE</span>
+      <h1 class="title">BOLA DE FOGO</h1>
+      <p class="subtitle">A sua plataforma de RPG feita por jogadores para jogadores</p>
+
+      <a
+        href="https://instagram.com/boladefogo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cta"
+      >
+        <svg class="cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+        </svg>
+        SIGA NO INSTAGRAM
+      </a>
+    </section>
+
+    <footer class="footer">
+      <p>© 2026 Bola de Fogo</p>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  *{
+    user-select: none;
+    cursor: default;
+    
+  }
+  .page {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 999px;
+    background: var(--accent-fire);
+    color: var(--surface-bg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+
+
+
+  @keyframes fireIconPulse {
+    0%, 100% { transform: rotate(-45deg) scale(1); filter: drop-shadow(0 0 20px #f9731680) drop-shadow(0 0 40px #ea580c40); }
+    50% { transform: rotate(-45deg) scale(1.05); filter: drop-shadow(0 0 30px #f97316aa) drop-shadow(0 0 60px #ea580c60); }
+  }
+
+  .title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text-primary);
+    text-shadow: 0 0 60px #f9731630;
+  }
+
+  .subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-weight: 400;
+    color: var(--text-muted);
+    max-width: 28ch;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding: 1rem 2.5rem;
+    border-radius: 4px;
+    background: var(--accent-fire);
+    color: var(--surface-bg);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .cta:hover {
+    background: #ea580c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 24px #f9731640;
+  }
+
+  .cta:active {
+    transform: translateY(0);
+  }
+
+  .cta-icon {
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #52525B;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .cta {
+      padding: 0.875rem 2rem;
+      font-size: 0.75rem;
+    }
+  }
+</style>

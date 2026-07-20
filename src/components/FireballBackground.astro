@@ -1,0 +1,242 @@
+---
+---
+<div class="fire-bg" aria-hidden="true">
+  <div class="fireball"></div>
+  <div class="halo"></div>
+  <div class="streak streak--1"></div>
+  <div class="streak streak--2"></div>
+  <div class="streak streak--3"></div>
+  <div class="streak streak--4"></div>
+  <div class="streak streak--5"></div>
+  <div class="streak streak--6"></div>
+  <div class="ember ember--1"></div>
+  <div class="ember ember--2"></div>
+  <div class="ember ember--3"></div>
+  <div class="ember ember--4"></div>
+  <div class="ember ember--5"></div>
+  <div class="ember ember--6"></div>
+  <div class="ember ember--7"></div>
+  <div class="ember ember--8"></div>
+  <div class="ember ember--9"></div>
+  <div class="ember ember--10"></div>
+  <div class="ember ember--11"></div>
+  <div class="ember ember--12"></div>
+  <div class="ember ember--13"></div>
+  <div class="ember ember--14"></div>
+  <div class="ember ember--15"></div>
+  <div class="ember ember--16"></div>
+  <div class="ember ember--17"></div>
+  <div class="ember ember--18"></div>
+  <div class="ember ember--19"></div>
+  <div class="ember ember--20"></div>
+</div>
+
+<style>
+  .fire-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Core fireball ── */
+  .fireball {
+    position: absolute;
+    width: clamp(280px, 35vw, 500px);
+    height: clamp(280px, 35vw, 500px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      #fff3e0 0%,
+      #f97316 15%,
+      #ea580c 30%,
+      #dc2626 50%,
+      #991b1b 70%,
+      transparent 100%
+    );
+    filter: blur(3px);
+    animation: corePulse 3s ease-in-out infinite;
+  }
+
+  /* ── Halo glow ── */
+  .halo {
+    position: absolute;
+    width: clamp(500px, 55vw, 800px);
+    height: clamp(500px, 55vw, 800px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      #f9731620 0%,
+      #ea580c15 30%,
+      #dc262610 50%,
+      transparent 80%
+    );
+    filter: blur(50px);
+    animation: haloPulse 5s ease-in-out infinite;
+  }
+
+  /* ── Streaks / flame licks ── */
+  .streak {
+    position: absolute;
+    height: 4px;
+    border-radius: 999px;
+    filter: blur(20px);
+    opacity: 0.6;
+  }
+
+  .streak--1 {
+    --streak-rotation: -12deg;
+    width: clamp(450px, 65vw, 950px);
+    top: 35%;
+    left: 3%;
+    background: linear-gradient(90deg, transparent 0%, #fef3c7 15%, #f97316 40%, #ea580c 65%, #dc2626 85%, transparent 100%);
+    animation: streakDrift 7s ease-in-out infinite;
+  }
+
+  .streak--2 {
+    --streak-rotation: 8deg;
+    width: clamp(400px, 55vw, 800px);
+    top: 58%;
+    left: 20%;
+    background: linear-gradient(90deg, transparent 0%, #fef3c7 10%, #f97316 35%, #ea580c 60%, #dc2626 80%, transparent 100%);
+    filter: blur(24px);
+    animation: streakDrift 8.5s ease-in-out infinite 0.8s;
+  }
+
+  .streak--3 {
+    --streak-rotation: -5deg;
+    width: clamp(550px, 75vw, 1100px);
+    top: 70%;
+    left: 0;
+    background: linear-gradient(90deg, transparent 0%, #fde68a 10%, #f97316 35%, #ea580c 65%, #dc2626 85%, transparent 100%);
+    filter: blur(28px);
+    opacity: 0.45;
+    animation: streakDrift 6.5s ease-in-out infinite 1.5s;
+  }
+
+  .streak--4 {
+    --streak-rotation: 14deg;
+    width: clamp(320px, 45vw, 650px);
+    top: 20%;
+    left: 32%;
+    background: linear-gradient(90deg, transparent 0%, #fef3c7 15%, #f97316 45%, #ea580c 75%, transparent 100%);
+    filter: blur(22px);
+    opacity: 0.4;
+    animation: streakDrift 9.5s ease-in-out infinite 0.3s;
+  }
+
+  .streak--5 {
+    --streak-rotation: -18deg;
+    width: clamp(380px, 50vw, 700px);
+    top: 45%;
+    right: 5%;
+    background: linear-gradient(270deg, transparent 0%, #fef3c7 15%, #f97316 40%, #ea580c 65%, #dc2626 85%, transparent 100%);
+    filter: blur(22px);
+    opacity: 0.5;
+    animation: streakDrift 7.8s ease-in-out infinite 1.2s;
+  }
+
+  .streak--6 {
+    --streak-rotation: 22deg;
+    width: clamp(280px, 35vw, 500px);
+    top: 15%;
+    right: 10%;
+    background: linear-gradient(270deg, transparent 0%, #fef3c7 20%, #f97316 50%, #ea580c 80%, transparent 100%);
+    filter: blur(18px);
+    opacity: 0.35;
+    animation: streakDrift 10.5s ease-in-out infinite 2s;
+  }
+
+  /* ── Embers ── */
+  .ember {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform, opacity;
+  }
+
+  .ember--1  { width: 8px;  height: 8px;  top: 30%; left: 44%; background: #fef3c7; box-shadow: 0 0 12px 4px #f97316aa; animation: float 3.2s ease-in-out infinite; }
+  .ember--2  { width: 5px;  height: 5px;  top: 35%; left: 55%; background: #fde68a; box-shadow: 0 0 8px 3px #f59e0baa; animation: floatSlow 4.2s ease-in-out infinite 0.6s; }
+  .ember--3  { width: 6px;  height: 6px;  top: 22%; left: 48%; background: #fef3c7; box-shadow: 0 0 10px 3px #ea580caa; animation: float 3.8s ease-in-out infinite 1.1s; }
+  .ember--4  { width: 4px;  height: 4px;  top: 26%; left: 62%; background: #fde68a; box-shadow: 0 0 6px 2px #f9731688; animation: floatSlow 5.2s ease-in-out infinite 0.4s; }
+  .ember--5  { width: 5px;  height: 5px;  top: 40%; left: 38%; background: #fef3c7; box-shadow: 0 0 8px 3px #ea580c88; animation: float 4.5s ease-in-out infinite 1.8s; }
+  .ember--6  { width: 3px;  height: 3px;  top: 18%; left: 54%; background: #fde68a; box-shadow: 0 0 5px 2px #f9731688; animation: floatSlow 3.8s ease-in-out infinite 1.4s; }
+  .ember--7  { width: 7px;  height: 7px;  top: 33%; left: 52%; background: #fef3c7; box-shadow: 0 0 10px 3px #f97316aa; animation: float 3.5s ease-in-out infinite 0.2s; }
+  .ember--8  { width: 4px;  height: 4px;  top: 44%; left: 48%; background: #fde68a; box-shadow: 0 0 6px 2px #f59e0baa; animation: floatSlow 4.8s ease-in-out infinite 0.9s; }
+  .ember--9  { width: 6px;  height: 6px;  top: 28%; left: 40%; background: #fef3c7; box-shadow: 0 0 9px 3px #ea580caa; animation: float 3.3s ease-in-out infinite 1.6s; }
+  .ember--10 { width: 3px;  height: 3px;  top: 38%; left: 60%; background: #fde68a; box-shadow: 0 0 5px 1px #f9731688; animation: floatSlow 5.5s ease-in-out infinite 2.1s; }
+  .ember--11 { width: 5px;  height: 5px;  top: 25%; left: 58%; background: #fef3c7; box-shadow: 0 0 8px 3px #ea580caa; animation: float 4.1s ease-in-out infinite 0.7s; }
+  .ember--12 { width: 4px;  height: 4px;  top: 46%; left: 34%; background: #fde68a; box-shadow: 0 0 6px 2px #f59e0b88; animation: floatSlow 4.3s ease-in-out infinite 1.3s; }
+  .ember--13 { width: 6px;  height: 6px;  top: 16%; left: 46%; background: #fef3c7; box-shadow: 0 0 11px 4px #f97316aa; animation: float 3.7s ease-in-out infinite 2.3s; }
+  .ember--14 { width: 3px;  height: 3px;  top: 50%; left: 55%; background: #fde68a; box-shadow: 0 0 4px 1px #ea580c88; animation: floatSlow 6s ease-in-out infinite 0.5s; }
+  .ember--15 { width: 5px;  height: 5px;  top: 20%; left: 65%; background: #fef3c7; box-shadow: 0 0 8px 2px #f97316aa; animation: float 4.4s ease-in-out infinite 1.9s; }
+  .ember--16 { width: 4px;  height: 4px;  top: 52%; left: 30%; background: #fde68a; box-shadow: 0 0 5px 1px #f59e0b88; animation: floatSlow 5.8s ease-in-out infinite 2.5s; }
+  .ember--17 { width: 7px;  height: 7px;  top: 31%; left: 36%; background: #fef3c7; box-shadow: 0 0 12px 4px #ea580caa; animation: float 3.9s ease-in-out infinite 0.3s; }
+  .ember--18 { width: 3px;  height: 3px;  top: 42%; left: 52%; background: #fde68a; box-shadow: 0 0 4px 1px #f9731688; animation: floatSlow 4.6s ease-in-out infinite 1.1s; }
+  .ember--19 { width: 5px;  height: 5px;  top: 24%; left: 62%; background: #fef3c7; box-shadow: 0 0 8px 2px #ea580caa; animation: float 3.6s ease-in-out infinite 2.7s; }
+  .ember--20 { width: 4px;  height: 4px;  top: 48%; left: 42%; background: #fde68a; box-shadow: 0 0 6px 2px #f59e0b88; animation: floatSlow 5.3s ease-in-out infinite 0.8s; }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .streak--1 { width: 90vw; }
+    .streak--2 { width: 75vw; }
+    .streak--3 { width: 100vw; }
+    .streak--4 { width: 60vw; }
+    .streak--5 { width: 70vw; }
+    .streak--6 { width: 50vw; }
+  }
+
+  /* ── Animations ── */
+  @keyframes corePulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(3px); }
+    50%      { transform: translate(-50%, -50%) scale(1.04); filter: blur(4px); }
+  }
+
+  @keyframes haloPulse {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); filter: blur(50px); }
+    50%      { opacity: 0.7; transform: translate(-50%, -50%) scale(1.08); filter: blur(60px); }
+  }
+
+  @keyframes streakDrift {
+    0%, 100% {
+      opacity: 0.5;
+      transform: rotate(var(--streak-rotation)) translateX(0);
+    }
+    50% {
+      opacity: 0.75;
+      transform: rotate(var(--streak-rotation)) translateX(30px);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(-14px) scale(1.15);
+      opacity: 1;
+    }
+  }
+
+  @keyframes floatSlow {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.5;
+    }
+    33% {
+      transform: translateY(-10px) translateX(5px);
+      opacity: 0.85;
+    }
+    66% {
+      transform: translateY(-5px) translateX(-4px);
+      opacity: 0.65;
+    }
+  }
+</style>

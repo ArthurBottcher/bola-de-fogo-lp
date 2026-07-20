@@ -1,0 +1,216 @@
+---
+---
+
+<div class="fire-container" aria-hidden="true">
+  <canvas id="fireCanvas"></canvas>
+</div>
+
+<style>
+  .fire-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('fireCanvas');
+  const ctx = canvas.getContext('2d');
+
+  if (canvas && ctx) {
+    const rand = (min, max) => Math.random() * (max - min) + min;
+
+    const resize = () => {
+      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    const mouse = { x: canvas.width * 0.5, y: canvas.height * 0.5 };
+    let aFires = [];
+    let aSparks = [];
+    let aSparks2 = [];
+
+    document.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    class Flame {
+      constructor() {
+        this.cx = mouse.x;
+        this.cy = mouse.y;
+        this.x = rand(this.cx - 25, this.cx + 25);
+        this.y = rand(this.cy - 5, this.cy + 5);
+        this.vy = rand(1, 3);
+        this.vx = rand(-1, 1);
+        this.r = rand(20, 30);
+        this.life = rand(3, 6);
+        this.alive = true;
+        this.h = Math.floor(rand(2, 40));
+        this.s = 100;
+        this.l = rand(80, 100);
+        this.a = 0;
+        this.ta = rand(0.2, 0.4);
+      }
+
+      update() {
+        this.y -= this.vy;
+        this.vy += 0.05;
+        this.x += this.vx;
+
+        if (this.x < this.cx) this.vx += 0.1;
+        else this.vx -= 0.1;
+
+        if (this.r > 0) this.r -= 0.1;
+        if (this.r <= 0) this.r = 0;
+
+        this.life -= 0.15;
+
+        if (this.life <= 0) {
+          this.a -= 0.03;
+          if (this.a <= 0) this.alive = false;
+        } else if (this.a < this.ta) {
+          this.a += 0.05;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.h}, ${this.s}%, ${this.l}%, ${this.a / 20})`;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.h}, ${this.s}%, ${this.l}%, ${this.a})`;
+        ctx.fill();
+      }
+    }
+
+    class Spark {
+      constructor() {
+        this.cx = mouse.x;
+        this.cy = mouse.y;
+        this.x = rand(this.cx - 40, this.cx + 40);
+        this.y = rand(this.cy, this.cy + 5);
+        this.lx = this.x;
+        this.ly = this.y;
+        this.vy = rand(1, 3);
+        this.vx = rand(-4, 4);
+        this.r = rand(0, 1);
+        this.life = rand(4, 5);
+        this.alive = true;
+        this.h = Math.floor(rand(2, 40));
+        this.s = 100;
+        this.l = rand(40, 100);
+        this.a = rand(0.8, 0.9);
+      }
+
+      update() {
+        this.lx = this.x;
+        this.ly = this.y;
+        this.y -= this.vy;
+        this.x += this.vx;
+
+        if (this.x < this.cx) this.vx += 0.2;
+        else this.vx -= 0.2;
+
+        this.vy += 0.08;
+        this.life -= 0.1;
+
+        if (this.life <= 0) {
+          this.a -= 0.05;
+          if (this.a <= 0) this.alive = false;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.moveTo(this.lx, this.ly);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = `hsla(${this.h}, ${this.s}%, ${this.l}%, ${this.a / 2})`;
+        ctx.lineWidth = this.r * 2;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.moveTo(this.lx, this.ly);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = `hsla(${this.h}, ${this.s}%, ${this.l}%, ${this.a})`;
+        ctx.lineWidth = this.r;
+        ctx.stroke();
+        ctx.closePath();
+      }
+    }
+
+    function draw() {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(10, 5, 2, 1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const grd = ctx.createRadialGradient(mouse.x, mouse.y - 200, 200, mouse.x, mouse.y - 100, 0);
+      grd.addColorStop(0, 'rgb(15, 5, 2)');
+      grd.addColorStop(1, 'rgb(30, 10, 2)');
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y - 100, 200, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      ctx.globalCompositeOperation = 'overlay';
+      for (let i = aFires.length - 1; i >= 0; i--) {
+        aFires[i].draw();
+      }
+
+      ctx.globalCompositeOperation = 'soft-light';
+      for (let i = aSparks.length - 1; i >= 0; i--) {
+        if (i % 2 === 0) aSparks[i].draw();
+      }
+
+      ctx.globalCompositeOperation = 'color-dodge';
+      for (let i = aSparks2.length - 1; i >= 0; i--) {
+        aSparks2[i].draw();
+      }
+    }
+
+    function update() {
+      aFires.push(new Flame());
+      aSparks.push(new Spark());
+      aSparks2.push(new Spark());
+
+      for (let i = aFires.length - 1; i >= 0; i--) {
+        if (aFires[i].alive) aFires[i].update();
+        else aFires.splice(i, 1);
+      }
+
+      for (let i = aSparks.length - 1; i >= 0; i--) {
+        if (aSparks[i].alive) aSparks[i].update();
+        else aSparks.splice(i, 1);
+      }
+
+      for (let i = aSparks2.length - 1; i >= 0; i--) {
+        if (aSparks2[i].alive) aSparks2[i].update();
+        else aSparks2.splice(i, 1);
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    if (canvas.parentElement) {
+      loop();
+    }
+  }
+</script>
