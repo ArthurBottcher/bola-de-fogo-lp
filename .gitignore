@@ -38,3 +38,6 @@ pnpm-debug.log*
 
 # Generated Cloudflare types
 worker-configuration.d.ts
+
+#Pencil files
+*.pen
